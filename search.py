@@ -152,8 +152,30 @@ def breadth_first_search(problem):
 
 def uniform_cost_search(problem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    raiseNotDefined()
+    "***YOUR CODE HERE ***"
+
+    start = problem.getStartState()
+    frontier = []
+    heapq.heappush(frontier, (0, start, [start, action]))
+    explored = set()
+    best_cost = {start: 0}
+
+    while(frontier):
+        cost, state, __path__ = heapq.heappop(frontier)
+
+        if problem.isGoalState(state):
+            return [x[1] for x in __path__][1:] 
+        
+        if state not in explored:
+            explored.add(state)
+            for successor, action, stepCost in problem.getSuccessors(state):
+                new_cost = cost + stepCost
+
+                if successor not in best_cost or new_cost < best_cost[successor]:
+                    best_cost[successor] = new_cost
+                    heapq.heappush(frontier, (new_cost,successor))
+                    
+    return []
 
 
 def heuristic(state, problem=None):
