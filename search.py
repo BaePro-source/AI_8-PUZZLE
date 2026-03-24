@@ -188,14 +188,45 @@ def heuristic(state, problem=None):
     goal in the provided SearchProblem. This heuristic is trivial.
     """
     "*** YOUR CODE HERE ***"
-    return 0
+    
+    distance = 0
+    for row in range(3):
+        for col in range(3):
+            cell = state.cells[row][col]
+            
+            if cell == 0:
+                continue    
+            
+            target_row = (cell - 1) // 3
+            target_col = (cell - 1) % 3
+            distance += abs(row - target_row) + abs(col - target_col)
+    
+    return distance
+            
 
-
-def aStar_search(problem, heuristic=heuristic):
+def aStar_search(problem,heuristic=heuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    raiseNotDefined()
-
+    start = problem.getStartState()
+    frontier = []
+    heapq.heappush(frontier, (0, 0, start, []))
+    best_cost = {start: 0}
+    
+    while(frontier):
+        _, cost, state, __path__ = heapq.heappop(frontier)
+        
+        if problem.isGoalState(state):
+            return __path__
+                                
+        for successor, action, stepCost in problem.getSuccessors(state):
+            new_cost = cost + stepCost
+            new_heuristic = heuristic(successor, problem)
+            new_total_cost = new_cost + new_heuristic
+            new__path__ = __path__ + [action]
+            
+            if successor not in best_cost or new_cost < best_cost[successor]:
+                best_cost[successor] = new_cost
+                heapq.heappush(frontier, (new_total_cost, new_cost, successor, new__path__))
 
 rand = random_search
 bfs = breadth_first_search
