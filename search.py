@@ -162,21 +162,21 @@ def uniform_cost_search(problem):
     best_cost = {start: 0}
     
     while(frontier):
-        cost, counter, state, __path__ = heapq.heappop(frontier)
+        cost, _, state, __path__ = heapq.heappop(frontier)
         
         if problem.isGoalState(state):
             return __path__
         
-        if state not in explored:
-
-            for successor, action, stepCost in problem.getSuccessors(state):
-                new_cost = cost + stepCost
-                new__path__ = __path__ + [action]
-                
-                if successor not in best_cost or new_cost < best_cost[successor]:
-                    best_cost[successor] = new_cost
-                    new_counter += 1
-                    heapq.heappush(frontier, (new_cost, new_counter, successor, new__path__))
+        #if state not in explored:
+                        
+        for successor, action, stepCost in problem.getSuccessors(state):
+            new_cost = cost + stepCost
+            new__path__ = __path__ + [action]
+            
+            if successor not in best_cost or new_cost < best_cost[successor]:
+                best_cost[successor] = new_cost
+                counter += 1
+                heapq.heappush(frontier, (new_cost, counter, successor, new__path__))
                     
 
     return []
