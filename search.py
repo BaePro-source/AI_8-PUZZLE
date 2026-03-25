@@ -151,8 +151,6 @@ def breadth_first_search(problem):
 
 
 def uniform_cost_search(problem):
-    """Search the node of least total cost first."""
-    "***YOUR CODE HERE ***"
 
     start = problem.getStartState()
     frontier = []
@@ -183,11 +181,6 @@ def uniform_cost_search(problem):
 
 
 def heuristic(state, problem=None):
-    """
-    A heuristic function estimates the cost from the current state to the nearest
-    goal in the provided SearchProblem. This heuristic is trivial.
-    """
-    "*** YOUR CODE HERE ***"
     
     distance = 0
     for row in range(3):
@@ -205,8 +198,7 @@ def heuristic(state, problem=None):
             
 
 def aStar_search(problem,heuristic=heuristic):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
+    
     start = problem.getStartState()
     frontier = []
     heapq.heappush(frontier, (0, 0, start, []))
@@ -227,6 +219,8 @@ def aStar_search(problem,heuristic=heuristic):
             if successor not in best_cost or new_cost < best_cost[successor]:
                 best_cost[successor] = new_cost
                 heapq.heappush(frontier, (new_total_cost, new_cost, successor, new__path__))
+
+    return []
 
 rand = random_search
 bfs = breadth_first_search
