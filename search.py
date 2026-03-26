@@ -201,11 +201,12 @@ def aStar_search(problem,heuristic=heuristic):
     
     start = problem.getStartState()
     frontier = []
-    heapq.heappush(frontier, (0, 0, start, []))
+    counter = 0
+    heapq.heappush(frontier, (0, 0, counter, start, []))
     best_cost = {start: 0}
     
     while(frontier):
-        _, cost, state, __path__ = heapq.heappop(frontier)
+        _, cost, _, state, __path__ = heapq.heappop(frontier)
         
         if problem.isGoalState(state):
             return __path__
@@ -218,7 +219,8 @@ def aStar_search(problem,heuristic=heuristic):
             
             if successor not in best_cost or new_cost < best_cost[successor]:
                 best_cost[successor] = new_cost
-                heapq.heappush(frontier, (new_total_cost, new_cost, successor, new__path__))
+                counter += 1
+                heapq.heappush(frontier, (new_total_cost, new_cost, counter, successor, new__path__))
 
     return []
 
